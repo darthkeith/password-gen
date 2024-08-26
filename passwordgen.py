@@ -25,9 +25,6 @@ BASE_CHARS = "".join(chr(i) for i in range(33, 127))
 
 
 def main():
-    if len(argv) <= 1:
-        print(HELP)
-        return
     length = int(argv[1])
     excluded = set(argv[2]) if len(argv) >= 3 else set()
     chars = "".join(c for c in BASE_CHARS if c not in excluded)
@@ -35,5 +32,8 @@ def main():
     print(password)
 
 
-main()
+try:
+    main()
+except (IndexError, ValueError):
+    print(HELP)
 
