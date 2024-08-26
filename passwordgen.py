@@ -1,28 +1,31 @@
 #!/usr/bin/env python3
-"""Command line program for generating secure passwords.
-
-Prints a randomly generated password of a given length to the console.
-
-Usage:
-    ./passwordgen.py [<password length>]
-
-    <password length> :
-        A positive integer. If omitted, a default length is used.
-
-Notes
------
-Uses true random number generation for security.
+"""Command line program for generating secure passwords using true random
+number generation.
 """
 
 from sys import argv
 from secrets import choice
 
-DEFAULT_LENGTH = 20
+HELP = """
+Description
+    Generate a random password of specified length.
+
+Usage
+    ./passwordgen.py <LENGTH>
+
+    <LENGTH>    The length of the generated password, a positive integer.
+"""
 
 # All printable ASCII characters excluding <space>
 CHARS = ''.join(chr(i) for i in range(33, 127))
 
-length = DEFAULT_LENGTH if len(argv) <= 1 else int(argv[1])
-password = ''.join(choice(CHARS) for _ in range(length))
-print(password)
+def main():
+    if len(argv) <= 1:
+        print(HELP)
+        return
+    length = int(argv[1])
+    password = ''.join(choice(CHARS) for _ in range(length))
+    print(password)
+
+main()
 
