@@ -7,25 +7,33 @@ from sys import argv
 from secrets import choice
 
 HELP = """
-Description
+Description:
     Generate a random password of specified length.
 
-Usage
-    ./passwordgen.py <LENGTH>
+Usage:
+    ./passwordgen.py <LENGTH> [EXCLUDED]
 
-    <LENGTH>    The length of the generated password, a positive integer.
+Arguments:
+    <LENGTH>
+        The length of the generated password, a positive integer.
+    [EXCLUDED]
+        (Optional) A string of characters to be excluded from the password.
 """
 
 # All printable ASCII characters excluding <space>
-CHARS = ''.join(chr(i) for i in range(33, 127))
+BASE_CHARS = "".join(chr(i) for i in range(33, 127))
+
 
 def main():
     if len(argv) <= 1:
         print(HELP)
         return
     length = int(argv[1])
-    password = ''.join(choice(CHARS) for _ in range(length))
+    excluded = set(argv[2]) if len(argv) >= 3 else set()
+    chars = "".join(c for c in BASE_CHARS if c not in excluded)
+    password = "".join(choice(chars) for _ in range(length))
     print(password)
+
 
 main()
 
